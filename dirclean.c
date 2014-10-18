@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include "fs.h"
 
 static void user_need_reread_usage( const char *ran_path );
@@ -16,8 +19,20 @@ int main( int arguments_count, char **arguments ){
     return 0;
 }
 
+static const char *file_prompt =
+"What to do with %s?\nsh -c '<your string>' <filepath> > ";
 static void print_file( const char *path ){
-    printf( "%s\n", path );
+    char command[255];
+    printf( file_prompt, path );
+    fgets( command, 255, stdin );
+
+    pid_t child_pid = fork();
+    if( child_pid < 0 )
+        printf( "%s:%u: fork failed", __FILE__, __LINE__ );
+    else if( child_pid == 0 )
+        execl( "/bin/sh", "sh", "-c", command, path, (char*)NULL );
+    else
+        waitpid( child_pid, NULL, 0 );
 }
 
 static void print_from_fs( const char *path ){
@@ -32,7 +47,6 @@ static void print_error( const char *path ){
 }
 
 static void print_directory( const char *path ){
-    print_file( path );
     iterate_directory( path, &print_from_fs );
 }
 
@@ -44,5 +58,3 @@ static void user_need_reread_usage( const char *ran_path ){
     printf( usage_with_name_masked, ran_path );
     exit(1);
 }
-
-
