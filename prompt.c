@@ -12,14 +12,17 @@ static bool simple_fork();
 
 static const char *file_prompt =
 "What to do with %s?\nsh -c '<your string>' <filepath> > ";
-void prompt_file( const char *path ){
+void prompt_file( struct big_picture *work ){
+    const char *path = work->subject;
     present_file( path );
 
     char command[255];
     printf( file_prompt, path );
-    fgets( command, 255, stdin );
+    scanf( "%255s", command );
 
-    if( simple_fork() )
+    if( strcmp( command, "next" ) == 0 )
+        work->canceled = true;
+    else if( simple_fork() )
         execl( "/bin/sh", "sh", "-c", command, path, (char*)NULL );
 }
 

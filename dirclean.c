@@ -4,6 +4,7 @@
 #include "prompt.h"
 
 static void user_need_reread_usage( const char *ran_path );
+static void handle_file( const char *path );
 static void print_error( const char *path );
 static void print_directory( const char *path );
 static void print_from_fs( const char *path );
@@ -17,9 +18,19 @@ int main( int arguments_count, char **arguments ){
     return 0;
 }
 
+static void handle_file( const char *path ){
+    struct big_picture *work = grow_big_picture( path );
+
+    do{
+        prompt_file( work );
+    } while( !work->canceled );
+
+    free(work); 
+}
+
 static void print_from_fs( const char *path ){
     at_fs_location(
-        path, &prompt_file, &print_directory,
+        path, &handle_file, &print_directory,
         &print_error
     );
 }

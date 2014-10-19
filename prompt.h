@@ -1,6 +1,8 @@
 #ifndef _HAVE_PROMPT_H
 #define _HAVE_PROMPT_H
 
-void prompt_file( const char *location );
+#include "big_picture.h"
+
+void prompt_file( struct big_picture *work );
 
 #endif // _HAVE_PROMPT_H
