@@ -4,43 +4,39 @@
 #include "prompt.h"
 
 static void user_need_reread_usage( const char *ran_path );
-static void handle_file( const char *path );
-static void print_error( const char *path );
-static void print_directory( const char *path );
-static void print_from_fs( const char *path );
+static void handle_file( struct big_picture *work );
+static void print_error( struct big_picture *work );
+static void handle_directory( struct big_picture *work );
+static void handle_node( const char *work );
 
 int main( int arguments_count, char **arguments ){
     if( arguments_count != 2 )
         user_need_reread_usage(arguments[0]);
     
-    print_from_fs( arguments[1] );
-          
+    handle_node( arguments[1] );
+
     return 0;
 }
 
-static void handle_file( const char *path ){
-    struct big_picture *work = grow_big_picture( path );
-
-    do{
-        prompt_file( work );
-    } while( !work->canceled );
-
-    free(work); 
-}
-
-static void print_from_fs( const char *path ){
+static void handle_node( const char *path ){
     at_fs_location(
-        path, &handle_file, &print_directory,
-        &print_error
+        path, &handle_file,
+        &handle_directory, &print_error
     );
 }
 
-static void print_error( const char *path ){
-    fprintf( stderr, "Error on %s.\n", path );
+static void handle_file( struct big_picture *work ){
+    do{
+        prompt_file( work );
+    } while( !work->canceled );
 }
 
-static void print_directory( const char *path ){
-    iterate_directory( path, &print_from_fs );
+static void print_error( struct big_picture *work ){
+    fprintf( stderr, "Error on %s.\n", work->subject );
+}
+
+static void handle_directory( struct big_picture *work ){
+    iterate_directory( work->subject, &handle_node );
 }
 
 static const char *usage_with_name_masked =
