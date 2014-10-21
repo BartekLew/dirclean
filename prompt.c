@@ -17,13 +17,18 @@ void prompt_file( struct big_picture *work ){
     present_file( path );
 
     char command[255];
-    printf( file_prompt, path );
-    scanf( "%255s", command );
+    while( !work->canceled ){
+        printf( file_prompt, path );
+        scanf( "%255s", command );
 
-    if( strcmp( command, "next" ) == 0 )
-        work->canceled = true;
-    else if( simple_fork() )
-        execl( "/bin/sh", "sh", "-c", command, path, (char*)NULL );
+        if( strcmp( command, "next" ) == 0 )
+            work->canceled = true;
+        else if( simple_fork() )
+            execl(
+                "/bin/sh", "sh", "-c",
+                command, path, (char*)NULL
+            );
+    }
 }
 
 static void present_file( const char *path ){

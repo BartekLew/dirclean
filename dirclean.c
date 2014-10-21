@@ -4,7 +4,6 @@
 #include "prompt.h"
 
 static void user_need_reread_usage( const char *ran_path );
-static void handle_file( struct big_picture *work );
 static void print_error( struct big_picture *work );
 static void handle_directory( struct big_picture *work );
 static void handle_node( const char *work );
@@ -20,15 +19,9 @@ int main( int arguments_count, char **arguments ){
 
 static void handle_node( const char *path ){
     at_fs_location(
-        path, &handle_file,
+        path, &prompt_file,
         &handle_directory, &print_error
     );
-}
-
-static void handle_file( struct big_picture *work ){
-    do{
-        prompt_file( work );
-    } while( !work->canceled );
 }
 
 static void print_error( struct big_picture *work ){
