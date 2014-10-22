@@ -6,20 +6,22 @@
 static void user_need_reread_usage( const char *ran_path );
 static void print_error( struct big_picture *work );
 static void handle_directory( struct big_picture *work );
-static void handle_node( const char *work );
+static void handle_node( struct big_picture *work );
 
 int main( int arguments_count, char **arguments ){
     if( arguments_count != 2 )
         user_need_reread_usage(arguments[0]);
     
-    handle_node( arguments[1] );
+    struct big_picture *work = grow_big_picture( arguments[1] );
+    handle_node( work );
+    free( work );
 
     return 0;
 }
 
-static void handle_node( const char *path ){
+static void handle_node( struct big_picture *work ){
     at_fs_location(
-        path, &prompt_file,
+        work, &prompt_file,
         &handle_directory, &print_error
     );
 }
@@ -29,7 +31,7 @@ static void print_error( struct big_picture *work ){
 }
 
 static void handle_directory( struct big_picture *work ){
-    iterate_directory( work->subject, &handle_node );
+    iterate_directory( work, &handle_node );
 }
 
 static const char *usage_with_name_masked =
