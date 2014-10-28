@@ -24,14 +24,15 @@ void prompt_file( struct big_picture *work ){
 
         if( strcmp( command, "next" ) == 0 )
             to_be_continued = false;
-        else if( strcmp( command, "nextdir" ) == 0 )
-            work->canceled = true;
-        else if( simple_fork() )
+        else if( strcmp( command, "nextdir" ) == 0 ){
+            end_of_task( work );
+            to_be_continued = false;
+        }else if( simple_fork() )
             execl(
                 "/bin/sh", "sh", "-c",
                 command, path, (char*)NULL
             );
-    }while( to_be_continued && !work->canceled );
+    }while( to_be_continued );
 }
 
 static void present_file( const char *path ){

@@ -19,9 +19,18 @@ struct big_picture *grow_big_picture(
 ){
     Alloc( struct big_picture, result, 1 );
     result->subject = subject;
-    result->next = parent;
-    result->canceled = false;
+    result->next = NULL;
 
     if( parent ) parent->next = result;
     return result;
+}
+
+void end_of_task( struct big_picture *task ){
+    struct big_picture *next = task->next;
+    task->next = NULL;
+    while( next ){
+        task = next;
+        next = task->next;
+        free( task );
+    }
 }

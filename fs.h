@@ -10,9 +10,7 @@ void at_fs_location(
     void (*not_found_action)( struct big_picture *work )
 );
 
-void iterate_directory(
-    struct big_picture *work,
-    void (*iteration)( struct big_picture *work )
-);
+struct big_picture ALLOCATOR
+*work_on_directory( const char *path );
 
 #endif //_HAVE_FS_H
