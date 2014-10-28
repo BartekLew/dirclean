@@ -27,7 +27,7 @@ void iterate_directory(
     struct big_picture *work,
     void (*iteration)( struct big_picture *work )
 ){
-    work->next = grow_big_picture( work->subject );
+    grow_big_picture( work, work->subject );
 
     DIR *target = opendir( work->subject );
     if( target ){

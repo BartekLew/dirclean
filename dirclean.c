@@ -12,7 +12,8 @@ int main( int arguments_count, char **arguments ){
     if( arguments_count != 2 )
         user_need_reread_usage(arguments[0]);
     
-    struct big_picture *work = grow_big_picture( arguments[1] );
+    struct big_picture *work = 
+        grow_big_picture( NULL, arguments[1] );
     handle_node( work );
     free( work );
 
