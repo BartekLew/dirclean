@@ -2,16 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
-#define Alloc( TYPE, NAME, SIZE )\
-    TYPE *NAME = (TYPE*) malloc( sizeof( TYPE ) * SIZE );\
-    if( !NAME ){\
-        fprintf( \
-            stderr, "%s,%u: heap ran out.", \
-            __FILE__, __LINE__ \
-        ); \
-        exit(1);\
-    }
+#include "memory.h"
 
 struct big_picture *grow_big_picture(
     struct big_picture *parent,

@@ -6,6 +6,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
+#include "memory.h"
 
 void at_fs_location(
     struct big_picture *work,
@@ -36,12 +37,11 @@ struct big_picture *work_on_directory( const char *path ){
              || strcmp( entry->d_name, ".." ) == 0 )
                 continue;
     
-            char *name = malloc(
+            Alloc(
+                char, name, 
                 strlen( path ) +
                 strlen( entry->d_name ) + 2
             );
-            if( !name )
-                exit(1);
 
             sprintf(
                 name, "%s/%s",
