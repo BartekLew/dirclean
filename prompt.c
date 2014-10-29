@@ -25,7 +25,7 @@ void prompt_file( struct big_picture *work ){
         if( strcmp( command, "next" ) == 0 )
             to_be_continued = false;
         else if( strcmp( command, "nextdir" ) == 0 ){
-            end_of_task( work );
+            cancel_remaining_tasks( work );
             to_be_continued = false;
         }else if( simple_fork() )
             execl(

@@ -13,4 +13,7 @@ void at_fs_location(
 struct big_picture ALLOCATOR
 *work_on_directory( const char *path );
 
+struct big_picture
+*in_file_order( struct big_picture *work );
+
 #endif //_HAVE_FS_H

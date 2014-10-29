@@ -13,6 +13,7 @@ struct big_picture ALLOCATOR *grow_big_picture(
     const char *subject
 );
 
-void end_of_task( struct big_picture *task );
+void cancel_remaining_tasks( struct big_picture *task );
+void free_work( struct big_picture *task );
 
 #endif // _HAVE_BIG_PICTURE_H

@@ -16,12 +16,16 @@ struct big_picture *grow_big_picture(
     return result;
 }
 
-void end_of_task( struct big_picture *task ){
-    struct big_picture *next = task->next;
-    task->next = NULL;
-    while( next ){
-        task = next;
-        next = task->next;
+void free_work( struct big_picture *task ){
+    while( task ){
+        struct big_picture *next = task->next;
+        free( (void*)task->subject );
         free( task );
+        task = next;
     }
+}
+
+void cancel_remaining_tasks( struct big_picture *task ){
+    free_work( task->next );
+    task->next = NULL;
 }

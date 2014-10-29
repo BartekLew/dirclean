@@ -57,3 +57,34 @@ struct big_picture *work_on_directory( const char *path ){
     return seed.next;
 }
         
+struct big_picture *in_file_order( struct big_picture *work ){
+    struct big_picture *order_start = work,
+                       *mess = work->next;
+    order_start->next = NULL;
+
+    while( mess ){
+        if( strcmp(
+                mess->subject,
+                order_start->subject
+            ) <= 0 ){
+            struct big_picture *more_mess = mess->next;
+            mess->next = order_start;
+            order_start = mess;
+            mess = more_mess;
+        } else {
+            struct big_picture *fit = order_start;
+            while( fit->next && strcmp(
+                       fit->next->subject,
+                       mess->subject
+                   ) <= 0 )
+                fit = fit->next;
+            struct big_picture *more_mess = mess->next;
+            mess->next = fit->next;
+            fit->next = mess;
+            mess = more_mess;
+        }
+    }
+
+    return order_start;
+}
+
