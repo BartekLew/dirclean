@@ -16,6 +16,18 @@ struct big_picture *grow_big_picture(
     return result;
 }
 
+struct big_picture *dirty_map(
+    void (*action)( struct big_picture* ),
+    struct big_picture *work
+){
+    struct big_picture *current = work;
+    while( current ){
+        action( current );
+        current = current->next;
+    }
+    return work;
+}
+
 void free_work( struct big_picture *task ){
     while( task ){
         struct big_picture *next = task->next;

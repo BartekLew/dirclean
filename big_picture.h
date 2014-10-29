@@ -13,6 +13,11 @@ struct big_picture ALLOCATOR *grow_big_picture(
     const char *subject
 );
 
+struct big_picture *dirty_map(
+    void (*action)( struct big_picture* ),
+    struct big_picture *work
+);
+
 void cancel_remaining_tasks( struct big_picture *task );
 void free_work( struct big_picture *task );
 

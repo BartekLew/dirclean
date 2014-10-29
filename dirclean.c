@@ -32,15 +32,11 @@ static void print_error( struct big_picture *work ){
 }
 
 static void handle_directory( struct big_picture *work ){
-    struct big_picture *listing = in_file_order(
-        work_on_directory( work->subject )
-    );
-    struct big_picture *cur = listing;
-    while( cur != NULL ){
-        handle_node( cur );
-        cur = cur->next;
-    }
-    free_work( listing );
+    free_work(    
+        dirty_map( &handle_node,
+            in_file_order(
+                work_on_directory( work->subject )
+    ) ) );
 }
 
 static const char *usage_with_name_masked =
