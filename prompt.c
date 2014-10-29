@@ -20,7 +20,8 @@ void prompt_file( struct big_picture *work ){
     bool to_be_continued = true;
     do{
         printf( file_prompt, path );
-        scanf( "%255s", command );
+        fgets( command, 255, stdin );
+        command[strlen( command )-1] = '\0';
 
         if( strcmp( command, "next" ) == 0 )
             to_be_continued = false;
@@ -29,7 +30,7 @@ void prompt_file( struct big_picture *work ){
             to_be_continued = false;
         }else if( simple_fork() )
             execl(
-                "/bin/sh", "sh", "-c",
+                "/bin/sh", "/bin/sh", "-c",
                 command, path, (char*)NULL
             );
     }while( to_be_continued );
