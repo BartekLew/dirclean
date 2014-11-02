@@ -2,38 +2,32 @@
 
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
 
+#define String_array( CONTENT ) \
+    (char*[]){ CONTENT, NULL }
+
+// for some reason not loaded from stdlib:
+void setenv( const char *, const char *, int );
+
 static void present_file( const char *path );
 static bool simple_fork();
 
-static const char *file_prompt =
-"What to do with %s?\nsh -c '<your string>' <filepath> > ";
+static const char *intro = "$file = %s\n";
 void prompt_file( struct big_picture *work ){
     const char *path = work->subject;
     present_file( path );
 
-    char command[255];
-    bool to_be_continued = true;
-    do{
-        printf( file_prompt, path );
-        fgets( command, 255, stdin );
-        command[strlen( command )-1] = '\0';
+    char *shell = getenv( "SHELL" );
+    setenv( "file", path, true );
 
-        if( strcmp( command, "next" ) == 0 )
-            to_be_continued = false;
-        else if( strcmp( command, "nextdir" ) == 0 ){
-            cancel_remaining_tasks( work );
-            to_be_continued = false;
-        }else if( simple_fork() )
-            execl(
-                "/bin/sh", "/bin/sh", "-c",
-                command, path, (char*)NULL
-            );
-    }while( to_be_continued );
+    printf( intro, path );
+    if( simple_fork() )
+        execv( shell, String_array( shell ) );
 }
 
 static void present_file( const char *path ){
