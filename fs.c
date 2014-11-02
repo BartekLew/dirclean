@@ -88,3 +88,25 @@ struct big_picture *in_file_order( struct big_picture *work ){
     return order_start;
 }
 
+struct big_picture *without_directories(
+    struct big_picture *work,
+    void (*directory_action)( struct big_picture* )
+){
+    struct big_picture predecessor = { .next = work };
+    struct big_picture *cursor = &predecessor;
+
+    while( cursor->next ){
+        struct stat info;
+        if( stat( work->subject, &info ) == 0 
+            && S_ISDIR( info.st_mode )
+        ){
+            directory_action( cursor->next );
+            struct big_picture *to_remove = cursor->next;
+            cursor->next = cursor->next->next;
+            free( to_remove );
+        } else
+            cursor = cursor->next;
+    }
+
+    return predecessor.next;
+}

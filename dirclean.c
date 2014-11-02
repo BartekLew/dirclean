@@ -33,9 +33,12 @@ static void print_error( struct big_picture *work ){
 
 static void handle_directory( struct big_picture *work ){
     free_work(    
-        dirty_map( &handle_node,
-            in_file_order(
-                work_on_directory( work->subject )
+        dirty_map( &prompt_file,
+            without_directories(
+                in_file_order(
+                    work_on_directory( work->subject )
+                ),
+                &handle_directory
     ) ) );
 }
 

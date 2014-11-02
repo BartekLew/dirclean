@@ -16,4 +16,9 @@ struct big_picture ALLOCATOR
 struct big_picture
 *in_file_order( struct big_picture *work );
 
+struct big_picture *without_directories(
+    struct big_picture *work,
+    void (*directory_action)( struct big_picture* )
+);
+
 #endif //_HAVE_FS_H
