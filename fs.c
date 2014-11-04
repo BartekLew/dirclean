@@ -42,6 +42,9 @@ struct big_picture *work_on_directory( const char *path ){
 }
         
 struct big_picture *in_file_order( struct big_picture *work ){
+    if( !work )
+        return NULL;
+
     struct big_picture *order_start = work,
                        *mess = work->next;
     order_start->next = NULL;
@@ -89,7 +92,8 @@ struct big_picture *without_directories(
             directory_action( cursor->next );
             struct big_picture *to_remove = cursor->next;
             cursor->next = cursor->next->next;
-            free( to_remove );
+            if( to_remove->allocated )
+                free( to_remove );
         } else
             cursor = cursor->next;
     }
