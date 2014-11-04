@@ -11,7 +11,9 @@ int main( int arguments_count, char **arguments ){
         user_need_reread_usage(arguments[0]);
    
     free_work( handle_directory(
-        grow_big_picture( NULL, arguments[1] )
+        &(struct big_picture){
+            .subject = arguments[1] 
+        }
     ) );
 
     return 0;

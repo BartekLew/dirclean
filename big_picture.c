@@ -9,8 +9,10 @@ struct big_picture *grow_big_picture(
     const char *subject
 ){
     Alloc( struct big_picture, result, 1 );
-    result->subject = subject;
-    result->next = NULL;
+    *result = (struct big_picture){
+        .subject = subject,
+        .allocated = true
+    };
 
     if( parent ) parent->next = result;
     return result;
@@ -32,7 +34,9 @@ void free_work( struct big_picture *task ){
     while( task ){
         struct big_picture *next = task->next;
         free( (void*)task->subject );
-        free( task );
+
+        if( task->allocated )
+            free( task );
         task = next;
     }
 }
