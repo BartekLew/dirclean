@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "big_picture.h"
 #include "fs.h"
@@ -22,46 +23,36 @@ int main( int arguments_count, char **arguments ){
 
 static struct big_picture *
 make_galery( struct big_picture *location ){
+    FILE *output = fopen( "galery[lsphoto].html", "w" );
+    if( output == NULL ){
+        fprintf( stderr,
+            " [lsphoto] can't open file for writing."
+        );
+        exit(1);
+    }
+
+    fprintf( output, "<html>\n  <body>\n" );
+
     return dirty_map( &html_for_image,
         without_directories(
             work_on_directory( location->subject ),
             &make_galery
-        ), NULL
+        ), (void *) output
     );
+
+    fprintf( output, "  </body>\n</html>" );
+
+    fclose(output);
 }
 
 void html_for_image( struct big_picture *location, void *user_data ){
     char name[ strlen(location->subject) + 5 ];
     sprintf( name, "%s.html", location->subject );
     
-    FILE *file = fopen( name, "w" );
-    if( file == NULL ){
-        fprintf( stderr,
-            " [lsphoto] can't open file for writing."
-        );
-        return;
-    }
+    FILE *file = (FILE*) user_data;
 
     fprintf( file,
-        "<html>\n"
-        "  <head> <title> %s </title> </head>\n"
-        "  <body>\n"
         "    <img style=\"max-width:90%%\" src=\"%s\">\n",
-        location->subject, location->subject
+        location->subject
     );
-
-    if( location->next != NULL ){
-        char next_name[ strlen(location->next->subject) + 5 ];
-        sprintf( next_name, "%s.html", location->next->subject );
-        fprintf( file,
-            "    <a href=\"%s\">%s</a>\n",
-            next_name, next_name
-        );
-    }
-    fprintf( file,
-        "  </body>\n"
-        "</html>"
-    );
-
-    fclose(file);
 }
