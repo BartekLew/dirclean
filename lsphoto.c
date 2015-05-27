@@ -52,7 +52,10 @@ void html_for_image( struct big_picture *location, void *user_data ){
     FILE *file = (FILE*) user_data;
 
     fprintf( file,
-        "    <img style=\"max-width:90%%\" src=\"%s\">\n",
-        location->subject
+        "    <div>\n"
+        "      <img style=\"max-width:90%%\" src=\"%s\"><br>\n"
+        "      <b>%s</b>\n"
+        "    </div>\n",
+        location->subject, location->subject
     );
 }
