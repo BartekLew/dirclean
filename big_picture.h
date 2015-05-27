@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #define ALLOCATOR
+#define OPTIONAL
 
 struct big_picture{
     const char *subject;
@@ -16,8 +17,9 @@ struct big_picture ALLOCATOR *grow_big_picture(
 );
 
 struct big_picture *dirty_map(
-    void (*action)( struct big_picture* ),
-    struct big_picture *work
+    void (*action)( struct big_picture*, void *user_data ),
+    struct big_picture *work,
+    void *user_data
 );
 
 void cancel_remaining_tasks( struct big_picture *task );

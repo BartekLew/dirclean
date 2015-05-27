@@ -3,6 +3,6 @@
 
 #include "big_picture.h"
 
-void prompt_file( struct big_picture *work );
+void prompt_file( struct big_picture *work, void *user_data );
 
 #endif // _HAVE_PROMPT_H

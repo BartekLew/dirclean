@@ -19,12 +19,12 @@ struct big_picture *grow_big_picture(
 }
 
 struct big_picture *dirty_map(
-    void (*action)( struct big_picture* ),
-    struct big_picture *work
+    void (*action)( struct big_picture*, void *user_data ),
+    struct big_picture *work, void *user_data
 ){
     struct big_picture *current = work;
     while( current ){
-        action( current );
+        action( current, user_data );
         current = current->next;
     }
     return work;

@@ -18,7 +18,7 @@ static void present_file( const char *path );
 static bool simple_fork();
 
 static const char *intro = "$file = %s\n";
-void prompt_file( struct big_picture *work ){
+void prompt_file( struct big_picture *work, void *user_data ){
     const char *path = work->subject;
     present_file( path );
 
@@ -35,7 +35,8 @@ static void present_file( const char *path ){
     const char *extension = path + strlen(path) - 4;
 
     if( strcmp( extension, ".mp3" ) == 0
-        || strcmp( extension, ".ogg" ) == 0 )
+        || strcmp( extension, ".ogg" ) == 0
+        || strcmp( extension, ".avi" ) == 0 )
         command = "/usr/bin/mplayer";
 
     if( command ){

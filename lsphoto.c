@@ -4,7 +4,7 @@
 #include "fs.h"
 
 static struct big_picture *make_galery( struct big_picture* );
-void html_for_image( struct big_picture* );
+void html_for_image( struct big_picture*, void *user_data );
 
 int main( int arguments_count, char **arguments ){
     if( arguments_count == 0 ){
@@ -26,11 +26,11 @@ make_galery( struct big_picture *location ){
         without_directories(
             work_on_directory( location->subject ),
             &make_galery
-        )
+        ), NULL
     );
 }
 
-void html_for_image( struct big_picture *location ){
+void html_for_image( struct big_picture *location, void *user_data ){
     char name[ strlen(location->subject) + 5 ];
     sprintf( name, "%s.html", location->subject );
     

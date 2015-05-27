@@ -27,7 +27,7 @@ static struct big_picture
                 work_on_directory( work->subject )
             ),
             &handle_directory
-    ) );
+    ), NULL );
 }
 
 static const char *usage_with_name_masked =
