@@ -8,9 +8,9 @@ static struct big_picture *make_galery( struct big_picture* );
 void html_for_image( struct big_picture*, void *user_data );
 
 int main( int arguments_count, char **arguments ){
-    if( arguments_count == 0 ){
+    if( arguments_count == 1 ){
         fprintf( stderr, "[lsphoto] no argument given.\n"
-            "lsphoto dir - make html galery in directory" );
+            "lsphoto dir - make html galery in directory\n" );
         return 1;
     }
 
@@ -26,7 +26,7 @@ make_galery( struct big_picture *location ){
     FILE *output = fopen( "galery[lsphoto].html", "w" );
     if( output == NULL ){
         fprintf( stderr,
-            " [lsphoto] can't open file for writing."
+            " [lsphoto] can't open file for writing.\n"
         );
         exit(1);
     }
