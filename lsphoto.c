@@ -33,16 +33,18 @@ make_galery( struct big_picture *location ){
 
     fprintf( output, "<html>\n  <body>\n" );
 
-    return dirty_map( &html_for_image,
+    struct big_picture *result = dirty_map( &html_for_image,
         without_directories(
             work_on_directory( location->subject ),
             &make_galery
         ), (void *) output
     );
 
-    fprintf( output, "  </body>\n</html>" );
+    fprintf( output, "  </body>\n</html>\n" );
 
     fclose(output);
+
+    return result;
 }
 
 void html_for_image( struct big_picture *location, void *user_data ){
