@@ -17,3 +17,6 @@ lsphoto: lsphoto.c libcleandir.a
 
 install: dirclean lsphoto
 	cp dirclean lsphoto ~/.local/bin
+
+clean:
+	rm *.o lsphoto dirclean *.a
