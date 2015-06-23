@@ -15,5 +15,5 @@ dirclean: dirclean.c libcleandir.a
 lsphoto: lsphoto.c libcleandir.a
 	${CC} -L. ${CFLAGS} lsphoto.c -lcleandir -o lsphoto
 
-install: dirclean
-	cp dirclean ~/.local/bin
+install: dirclean lsphoto
+	cp dirclean lsphoto ~/.local/bin
