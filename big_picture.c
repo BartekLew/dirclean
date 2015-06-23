@@ -22,11 +22,12 @@ struct big_picture *dirty_map(
     void (*action)( struct big_picture*, void *user_data ),
     struct big_picture *work, void *user_data
 ){
-    struct big_picture *current = work;
-    while( current ){
-        if( action )
+    if( action ){
+        struct big_picture *current = work;
+        while( current ){
             action( current, user_data );
-        current = current->next;
+            current = current->next;
+        }
     }
     return work;
 }
@@ -40,9 +41,4 @@ void free_work( struct big_picture *task ){
             free( task );
         task = next;
     }
-}
-
-void cancel_remaining_tasks( struct big_picture *task ){
-    free_work( task->next );
-    task->next = NULL;
 }

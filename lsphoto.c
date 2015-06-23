@@ -1,3 +1,9 @@
+/*
+    lsphoto.c - an another program I wrote using same backend. It create html
+    file with images in the directory. It's simple and buggy, but who cares?
+    A lollipop for one who does. ;-)
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

@@ -1,3 +1,7 @@
+/*
+    memory.h - I leave it without comment. Maybe some day? ;-)
+*/
+
 #ifndef _HAVE_MEMORY_H
 #define _HAVE_MEMORY_H
 

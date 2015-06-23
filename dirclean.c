@@ -1,3 +1,9 @@
+/*
+    dirclean.c - a program for cleaning directories, a main program so to speak.
+    At the time I write it the code is so staightforward that trying to explain
+    it would insult your inteligence, so I don't do it. :-)
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

@@ -1,0 +1,30 @@
+dirclean - this is dead simple for now. Just point it at a directory with lots
+of random files you feel you should do something about. First created it for
+Downloads directory. Sure I could drop it to tmpfs, but it's fun to look there
+after some time and sometimes there's something useful I'm too lazy to put in
+proper directory in the first place.
+It's also good for directory with music. There is so much stuff and I listen
+to just a few albums. That's crazy, isn't it? For this purpose I created
+--group switch so that I work with whole directories and not separate files.
+I want to add shuffling and then MPD can go away. ;-) However I've just found
+that this option is buggy, one of directories is always treated as a regular
+file... I must fix it soon.
+So when you run it and some files are found, they are prompted. If it's one
+file (no --group option) and it is movie, mp3, pdf it's gonna be opened
+before prompting. Yes, it's very dumb piece of code, but you probably can
+program so just take a look at prompt.c, there is everything, you can do it,
+I know it.
+Later you see $file = ... and the shell is called. You can use $file variable
+to make things easier. When you are done, just close it and the next is picked.
+When you are too tired yet and want to stop before finishing, just kill dirclean
+and close shell...
+
+The code... Quoting one of my maths teachers, this is obvious, but the code
+really is... Or quoting one of my physics teaches, why haven't you picked
+history of dance instead of computer science? :-D You probably don't want
+to read all so there are some usefull comments in header files. If you are
+lucky, they are up-to-date.
+
+Before you look at the code I wish you low WTF/h rate. :-) Don't take it too
+seriously, the life would be too boring if the code wasn't a little bit crazy.
+Like functional code in C (but not too functional - that's why C).
