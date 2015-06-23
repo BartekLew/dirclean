@@ -24,7 +24,8 @@ struct big_picture *dirty_map(
 ){
     struct big_picture *current = work;
     while( current ){
-        action( current, user_data );
+        if( action )
+            action( current, user_data );
         current = current->next;
     }
     return work;
