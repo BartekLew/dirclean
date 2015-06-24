@@ -86,7 +86,7 @@ struct big_picture *without_directories(
 
     while( cursor->next ){
         struct stat info;
-        if( stat( cursor->subject, &info ) == 0 
+        if( stat( cursor->next->subject, &info ) == 0 
             && S_ISDIR( info.st_mode )
         ){
             directory_action( cursor->next );

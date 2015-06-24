@@ -6,9 +6,8 @@ proper directory in the first place.
 It's also good for directory with music. There is so much stuff and I listen
 to just a few albums. That's crazy, isn't it? For this purpose I created
 --group switch so that I work with whole directories and not separate files.
-I want to add shuffling and then MPD can go away. ;-) However I've just found
-that this option is buggy, one of directories is always treated as a regular
-file... I must fix it soon.
+I want to add shuffling and then MPD can go away. ;-) 
+
 So when you run it and some files are found, they are prompted. If it's one
 file (no --group option) and it is movie, mp3, pdf it's gonna be opened
 before prompting. Yes, it's very dumb piece of code, but you probably can
